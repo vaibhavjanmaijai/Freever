@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnionTerm — Redefining Partnership</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --parchment: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --rust: #8b3a2a;
+    --sage: #4a5e4a;
+    --cream: #faf7f0;
+    --muted: #7a7060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(250,247,240,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .logo span { color: var(--gold); }
+
+  nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--cream) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--ink) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8rem 4rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg-rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    pointer-events: none;
+  }
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+    animation: rotate-ring 40s linear infinite;
+  }
+  .ring:nth-child(1) { width: 100%; height: 100%; top: 0; left: 0; }
+  .ring:nth-child(2) { width: 75%; height: 75%; top: 12.5%; left: 12.5%; animation-duration: 30s; animation-direction: reverse; border-color: rgba(139,58,42,0.1); }
+  .ring:nth-child(3) { width: 50%; height: 50%; top: 25%; left: 25%; animation-duration: 20s; }
+
+  @keyframes rotate-ring {
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 820px;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+    animation: fadeUp 1.2s 0.2s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    animation: fadeUp 1.2s 0.3s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+    animation: fadeUp 1.2s 0.5s ease both;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 2rem;
+    animation: fadeUp 1.2s 0.4s ease both;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    animation: fadeUp 1.2s 0.7s ease both;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.9rem 2.4rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold); color: var(--ink); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.9rem 2.4rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--ink);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .stat-item {
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-item:last-child { border: none; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--gold);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  /* ── SECTION COMMONS ── */
+  section {
+    padding: 6rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── WHY SECTION ── */
+  .why-section {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 4rem;
+  }
+
+  .why-left h2 { color: var(--ink); }
+  .why-left p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .why-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .why-card {
+    background: var(--parchment);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 1.8rem;
+    border-left: 3px solid var(--gold);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .why-card:hover {
+    transform: translateX(6px);
+    box-shadow: -6px 0 20px rgba(201,168,76,0.15);
+  }
+
+  .why-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--gold-light);
+    font-weight: 300;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .why-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .why-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .how-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .how-section .section-label { color: var(--gold); }
+  .how-section h2 { color: var(--cream); }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+
+  .step {
+    position: relative;
+    padding-top: 3rem;
+  }
+
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 1.2rem;
+    left: 2.5rem;
+    right: 0;
+    height: 1px;
+    background: rgba(201,168,76,0.3);
+  }
+  .step:last-child::before { display: none; }
+
+  .step-dot {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    background: var(--ink);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--cream);
+  }
+  .step p { font-size: 0.85rem; color: rgba(250,247,240,0.55); line-height: 1.7; }
+
+  /* ── CONTRACT TERMS ── */
+  .contract-section {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .contract-doc {
+    margin-top: 3rem;
+    background: white;
+    border: 1px solid rgba(201,168,76,0.3);
+    box-shadow: 0 20px 60px rgba(26,20,16,0.08);
+    overflow: hidden;
+  }
+
+  .contract-header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .contract-header::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(201,168,76,0.3);
+    pointer-events: none;
+  }
+
+  .contract-header .seal {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .contract-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+
+  .contract-header p {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .contract-body {
+    padding: 3rem;
+  }
+
+  .contract-preamble {
+    background: var(--parchment);
+    border-left: 3px solid var(--gold);
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .clause {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .clause:last-child { border-bottom: none; }
+
+  .clause-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .clause h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--ink);
+  }
+
+  .clause p, .clause ul {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .clause ul {
+    padding-left: 1.2rem;
+    list-style: none;
+  }
+
+  .clause ul li::before {
+    content: '§ ';
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .contract-signature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .sig-block {
+    text-align: center;
+  }
+
+  .sig-line {
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 0.5rem;
+    height: 2.5rem;
+  }
+
+  .sig-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── PLANS ── */
+  .plans-section {
+    background: var(--parchment);
+  }
+
+  .plans-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  .plan-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2.5rem;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .plan-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(26,20,16,0.1);
+  }
+
+  .plan-card.featured {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--gold);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -1px;
+    right: 1.5rem;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    font-weight: 500;
+  }
+
+  .plan-duration {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    display: block;
+  }
+
+  .plan-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .plan-card.featured .plan-label { color: rgba(250,247,240,0.5); }
+
+  .plan-features {
+    list-style: none;
+    margin: 1.5rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .plan-features li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    line-height: 1.5;
+  }
+  .plan-card.featured .plan-features li { color: rgba(250,247,240,0.7); }
+
+  .plan-features li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  /* ── PRINCIPLES ── */
+  .principles-section {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+
+  .principle {
+    border-top: 1px solid rgba(201,168,76,0.3);
+    padding-top: 1.5rem;
+  }
+
+  .principle-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .principle h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .principle p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── FAQ ── */
+  .faq-section {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .faq-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-section h2 { color: var(--cream); }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem 0;
+    cursor: pointer;
+  }
+
+  .faq-q {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .faq-toggle {
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .faq-a {
+    font-size: 0.88rem;
+    color: rgba(250,247,240,0.55);
+    line-height: 1.8;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding-top: 1rem;
+  }
+
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 8rem 4rem;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: 1.2rem;
+  }
+  .cta-section h2 em { font-style: italic; color: var(--rust); }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0f0c09;
+    color: rgba(250,247,240,0.4);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+
+  footer .logo { color: var(--cream); }
+
+  .footer-note {
+    font-size: 0.72rem;
+    color: rgba(250,247,240,0.3);
+    text-align: right;
+    max-width: 320px;
+    line-height: 1.6;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .principles-grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1.5rem; }
+    .contract-signature { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    .footer-note { text-align: center; }
+    .btn-group { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Union<span>Term</span></div>
+  <ul>
+    <li><a href="#why">Philosophy</a></li>
+    <li><a href="#how">Process</a></li>
+    <li><a href="#contract">Contract</a></li>
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#join" class="nav-cta">Begin</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">A New Vision of Partnership</span>
+    <h1>Marriage on <em>your</em><br>own terms</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">What if commitment came with a renewal clause? UnionTerm reimagines partnership as a conscious, time-bound agreement — renewable, respectful, and always mutual.</p>
+    <div class="btn-group">
+      <a href="#contract" class="btn-primary">View the Contract</a>
+      <a href="#why" class="btn-outline">Our Philosophy</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">50%</span>
+    <span class="stat-label">of traditional marriages end in separation</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">1–5</span>
+    <span class="stat-label">year contract terms available</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">mutual consent at every step</span>
+  </div>
+</div>
+
+<!-- WHY SECTION -->
+<section id="why">
+  <div class="why-section">
+    <div class="why-grid">
+      <div class="why-left">
+        <span class="section-label">The Philosophy</span>
+        <h2>Why should love be a life sentence?</h2>
+        <p>Humans change. Needs evolve. The idea that two strangers who fall in love at 24 must be perfectly compatible at 44, 64, and beyond — and that separating them is a failure — is a modern myth built on old institutions.</p>
+        <p>UnionTerm proposes something radical: that commitment can be <em>intentional</em> and <em>renewable</em>. That choosing to stay is more meaningful than being legally trapped to stay. That two adults can define the shape, duration, and terms of their partnership — together.</p>
+        <p>This isn't about avoiding commitment. It's about committing <strong>consciously</strong>.</p>
+      </div>
+      <div class="why-cards">
+        <div class="why-card">
+          <span class="why-card-num">01</span>
+          <h3>Intentional Renewal</h3>
+          <p>Every term end is a checkpoint — a moment to reflect, grow, and actively choose to continue. Staying together becomes a choice, not a default.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card-num">02</span>
+          <h3>Dignity in Separation</h3>
+          <p>When a term ends without renewal, both parties part without stigma. No failure, no scandal — just two lives that ran their beautiful course together.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card-num">03</span>
+          <h3>Defined from the Start</h3>
+          <p>Financial terms, living arrangements, shared responsibilities — all agreed upon upfront, reducing conflict and building clarity from day one.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card-num">04</span>
+          <h3>Equal Agency</h3>
+          <p>Both partners hold identical rights. No gender-based defaults. No cultural pressure. The contract reflects what <em>you two</em> decide — nothing more.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how-section">
+  <div class="how-inner">
+    <span class="section-label">The Process</span>
+    <h2>From conversation<br>to commitment</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-dot">1</div>
+        <h3>Draft Together</h3>
+        <p>Both partners collaboratively define their terms — duration, finances, cohabitation, family planning — using our guided framework.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">2</div>
+        <h3>Legal Review</h3>
+        <p>The draft is reviewed by a certified relationship contract attorney to ensure it's enforceable and protects both parties equally.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">3</div>
+        <h3>Mutual Signing</h3>
+        <p>Both parties sign voluntarily and in full awareness. The ceremony is yours to design — traditional, modern, or quietly private.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">4</div>
+        <h3>Renew or Release</h3>
+        <p>90 days before term end, both partners decide: renew for another term, renegotiate new terms, or separate with dignity and clarity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRACT TERMS -->
+<section id="contract">
+  <div class="contract-section">
+    <span class="section-label">The Document</span>
+    <h2>UnionTerm Partnership Contract</h2>
+    <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.8; max-width: 600px;">A sample framework of the terms that govern a UnionTerm partnership. All clauses are negotiable and tailored to each couple's agreement.</p>
+
+    <div class="contract-doc">
+      <div class="contract-header">
+        <span class="seal">⊕</span>
+        <h3>UNIONTERM PARTNERSHIP AGREEMENT</h3>
+        <p>A Voluntary, Time-Bound, Mutually Consented Partnership Contract</p>
+      </div>
+      <div class="contract-body">
+
+        <div class="contract-preamble">
+          "We, the undersigned, enter this partnership of our own free will, in full awareness of its terms, duration, and conditions. We affirm that love expressed through clarity and consent is stronger than love maintained by obligation alone."
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article I</span>
+          <h4>Definitions & Parties</h4>
+          <p>This Agreement is entered into between Partner A and Partner B, both adults of sound mind, unmarried or legally free to enter this contract, who mutually consent to a defined partnership for the duration specified herein.</p>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article II</span>
+          <h4>Term Duration</h4>
+          <ul>
+            <li>The initial partnership term shall be [1 / 2 / 3 / 5] year(s) from the date of signing.</li>
+            <li>The term may be renewed, renegotiated, or allowed to expire — decided jointly 90 days prior to expiry.</li>
+            <li>Either party may call for early termination with 60 days written notice and mutual mediation.</li>
+            <li>Renewal is not automatic. Both parties must actively affirm continuation.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article III</span>
+          <h4>Living Arrangements</h4>
+          <ul>
+            <li>Cohabitation arrangements are specified at signing: shared residence, separate residences, or hybrid.</li>
+            <li>Both parties retain individual rights to their pre-existing property.</li>
+            <li>Jointly acquired assets during the term are governed by the Shared Asset Clause (Article VI).</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article IV</span>
+          <h4>Financial Terms</h4>
+          <ul>
+            <li>Each partner's financial independence is fully preserved.</li>
+            <li>Shared expenses (rent, utilities, travel) shall be split as specified: [equally / proportional to income / other].</li>
+            <li>Neither party shall be financially liable for the other's pre-existing debts.</li>
+            <li>In the event of non-renewal, no spousal maintenance is owed unless explicitly agreed in a separate addendum.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article V</span>
+          <h4>Exclusivity & Personal Boundaries</h4>
+          <ul>
+            <li>The nature of exclusivity (monogamous / non-monogamous / to be defined) is agreed upon at signing.</li>
+            <li>Both partners retain full autonomy over their bodies, careers, social lives, and personal identities.</li>
+            <li>Neither party shall restrict the other's freedom of movement, association, or expression.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article VI</span>
+          <h4>Shared Assets & Property</h4>
+          <ul>
+            <li>Any property purchased jointly during the term is co-owned 50/50 unless otherwise specified.</li>
+            <li>Upon expiry without renewal, jointly held assets shall be divided per the Asset Division Addendum.</li>
+            <li>Sentimental or personal items remain with the original owner at all times.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article VII</span>
+          <h4>Children & Family Planning</h4>
+          <ul>
+            <li>Decision on children is a separate, explicit mutual agreement — never assumed.</li>
+            <li>If a child is born during the term, the contract automatically extends for custody and parenting clarity.</li>
+            <li>Both parents retain equal rights and obligations regardless of partnership status.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article VIII</span>
+          <h4>Dispute Resolution</h4>
+          <ul>
+            <li>Disputes shall first be addressed through structured mediation by a neutral third party.</li>
+            <li>Legal proceedings are a last resort, pursued only after mediation is exhausted.</li>
+            <li>Both parties agree to engage in good faith at all stages of resolution.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article IX</span>
+          <h4>Non-Renewal & Separation</h4>
+          <ul>
+            <li>If either party chooses not to renew, the partnership concludes at term end without penalty.</li>
+            <li>Both parties agree to cooperate in the orderly transition of shared responsibilities.</li>
+            <li>No social stigma, cultural blame, or legal consequence attaches to peaceful non-renewal.</li>
+            <li>A 30-day "transition window" post-expiry is available for logistical separation.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <span class="clause-num">Article X</span>
+          <h4>Mutual Consent Affirmation</h4>
+          <p>Both parties confirm that this agreement is entered freely, without coercion, fully informed, and in alignment with their values. This contract represents their chosen architecture of love and partnership.</p>
+        </div>
+
+        <div class="contract-signature">
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <span class="sig-label">Partner A — Signature & Date</span>
+          </div>
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <span class="sig-label">Partner B — Signature & Date</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="plans" class="plans-section">
+  <div class="plans-inner">
+    <span class="section-label">Contract Terms</span>
+    <h2>Choose your<br>partnership duration</h2>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <span class="plan-duration">1 yr</span>
+        <span class="plan-label">Trial Union</span>
+        <ul class="plan-features">
+          <li>Ideal for couples testing long-term compatibility</li>
+          <li>Minimal shared asset accumulation</li>
+          <li>No-fault separation at term end</li>
+          <li>Optional renewal or upgrade to longer term</li>
+        </ul>
+        <a href="#join" class="btn-outline">Select This Term</a>
+      </div>
+
+      <div class="plan-card featured">
+        <span class="plan-badge">Most Chosen</span>
+        <span class="plan-duration">3 yr</span>
+        <span class="plan-label">Established Union</span>
+        <ul class="plan-features">
+          <li>Time to build genuine shared life</li>
+          <li>Structured financial co-ownership</li>
+          <li>Mid-term check-in at 18 months</li>
+          <li>Family planning addendum available</li>
+        </ul>
+        <a href="#join" class="btn-primary">Select This Term</a>
+      </div>
+
+      <div class="plan-card">
+        <span class="plan-duration">5 yr</span>
+        <span class="plan-label">Long-Term Union</span>
+        <ul class="plan-features">
+          <li>Deep partnership with long horizon</li>
+          <li>Full asset co-ownership framework</li>
+          <li>Annual renewal check-in included</li>
+          <li>Convertible to traditional marriage</li>
+        </ul>
+        <a href="#join" class="btn-outline">Select This Term</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section>
+  <div class="principles-section">
+    <span class="section-label">Our Values</span>
+    <h2>What we stand for</h2>
+    <div class="principles-grid">
+      <div class="principle">
+        <span class="principle-icon">⚖️</span>
+        <h3>Radical Equality</h3>
+        <p>Every clause applies identically to both partners. No default gender roles, no assumed hierarchy. Pure mutuality.</p>
+      </div>
+      <div class="principle">
+        <span class="principle-icon">🕊️</span>
+        <h3>Dignity Always</h3>
+        <p>Whether a union lasts one year or twenty, both partners deserve to exit with respect, not shame. Separation is not failure.</p>
+      </div>
+      <div class="principle">
+        <span class="principle-icon">🔍</span>
+        <h3>Full Transparency</h3>
+        <p>All terms are explicit, written, and agreed. Nothing is assumed. The contract is the relationship's foundation.</p>
+      </div>
+      <div class="principle">
+        <span class="principle-icon">🔄</span>
+        <h3>Intentional Renewal</h3>
+        <p>Choosing to stay matters more than being unable to leave. Renewal is a conscious, celebrated act of love.</p>
+      </div>
+      <div class="principle">
+        <span class="principle-icon">🛡️</span>
+        <h3>Legal Protection</h3>
+        <p>The contract is designed to protect both parties at every stage — especially if things don't go as hoped.</p>
+      </div>
+      <div class="principle">
+        <span class="principle-icon">🌱</span>
+        <h3>Evolving Together</h3>
+        <p>Each renewal is a renegotiation. As you grow, your partnership terms can grow with you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="faq-inner">
+    <span class="section-label">Questions</span>
+    <h2>Common questions</h2>
+
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Is this legally recognized? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">In many countries, cohabitation agreements and domestic partnership contracts hold legal weight. We work with legal professionals to ensure your contract is as enforceable as possible within your jurisdiction. Traditional marriage registration is separate and optional.</div>
+    </div>
+
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">What if one person wants to renew but the other doesn't? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Renewal requires both parties' consent. If one partner chooses not to renew, the contract expires at term end. No one can be compelled to continue. This is by design — honoring both people's agency fully.</div>
+    </div>
+
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Can we convert this to a traditional marriage later? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Absolutely. Many couples use UnionTerm as a conscious first phase, and after one or more successful renewals, choose to convert to a traditional legal marriage. The two are not mutually exclusive.</div>
+    </div>
+
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">What happens if we have children during the term? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">A child's wellbeing always takes precedence. Upon pregnancy or birth, a Child & Custody Addendum automatically supplements the contract, ensuring both parents' rights and responsibilities are clearly defined regardless of the partnership's future.</div>
+    </div>
+
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Is UnionTerm anti-marriage or anti-religion? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Not at all. UnionTerm is pro-choice — we believe people should have more options, not fewer. Traditional marriage remains a beautiful institution for those it serves. UnionTerm simply offers an alternative for those whose values, circumstances, or philosophy call for something different.</div>
+    </div>
+
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Can same-sex or non-binary couples use UnionTerm? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Yes, absolutely and without exception. UnionTerm is designed for any two adults entering a partnership. The contract uses neutral language and makes no assumptions about gender, sexuality, or relationship structure.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="join">
+  <div class="cta-section">
+    <span class="section-label">Begin</span>
+    <h2>Start writing your<br><em>own story</em></h2>
+    <p>Download the contract template, explore the framework, and begin the most honest conversation you'll have about partnership.</p>
+    <div class="btn-group">
+      <a href="#contract" class="btn-primary">Download Contract Template</a>
+      <a href="#how" class="btn-outline">Learn the Process</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Union<span style="color:var(--gold)">Term</span></div>
+  <div class="footer-note">
+    UnionTerm is a conceptual framework for conscious partnership. Always consult a licensed legal professional in your jurisdiction. This does not constitute legal advice.
+  </div>
+</footer>
+
+</body>
+</html>
