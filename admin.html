@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- NOTE: this page is intentionally unlisted/unlinked (no nav link points here).
+     It is reachable only if someone knows the URL: yourdomain.com/admin.html
+     TODO (future): add real authentication (e.g. a login gate, IP allowlist,
+     or a shared secret query param) before this is used in production. -->
+<title>Admin — ChooseAgain Waitlist</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --gold: #c9a84c;
+    --white: #ffffff;
+    --soft-white: #f8f8f6;
+    --charcoal: #2d2d2d;
+    --muted: #6b7280;
+    --border: rgba(201,168,76,0.2);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--soft-white);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    padding: 2.5rem 3rem;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+  h1 span { color: var(--gold); }
+  .subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 2.5rem; }
+
+  .stats-row { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.8rem;
+    min-width: 180px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--navy);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
+  .toolbar h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--navy); font-weight: 600; }
+
+  button.export-btn, button.refresh-btn {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button.export-btn:hover, button.refresh-btn:hover { background: var(--gold); color: var(--navy); }
+  button.refresh-btn { background: transparent; color: var(--navy); border: 1px solid var(--navy); margin-right: 0.6rem; }
+
+  .table-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 900px; }
+  th, td { text-align: left; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(13,27,42,0.07); white-space: nowrap; }
+  th {
+    background: rgba(13,27,42,0.03);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  tr:hover td { background: rgba(201,168,76,0.04); }
+
+  .empty-state, .loading-state, .error-state {
+    padding: 3rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .error-state { color: #b3473f; }
+
+  .config-banner {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border);
+    padding: 1rem 1.4rem;
+    font-size: 0.82rem;
+    color: var(--charcoal);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .config-banner code { background: rgba(13,27,42,0.06); padding: 0.1rem 0.4rem; }
+</style>
+</head>
+<body>
+
+<h1>Choose<span>Again</span> — Admin</h1>
+<p class="subtitle">Waitlist registrations overview. This page has no authentication yet — do not share this URL.</p>
+
+<!-- Shown only if the Apps Script URL below hasn't been configured -->
+<div class="config-banner" id="configBanner" style="display:none;">
+  Set <code>ADMIN_SCRIPT_URL</code> at the top of the script in this file to your deployed Google Apps Script Web App URL (the same one used by the waitlist form, which also needs a "GET" handler — see setup instructions provided alongside this file).
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <span class="stat-num" id="statTotal">—</span>
+    <span class="stat-label">Total Registrations</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-num" id="statToday">—</span>
+    <span class="stat-label">Signups Today</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-num" id="statWeek">—</span>
+    <span class="stat-label">Last 7 Days</span>
+  </div>
+</div>
+
+<div class="toolbar">
+  <h2>Recent Signups</h2>
+  <div>
+    <button class="refresh-btn" id="refreshBtn">Refresh</button>
+    <button class="export-btn" id="exportBtn">Export CSV</button>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table id="dataTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Full Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>City</th>
+        <th>Occupation</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Relationship Goal</th>
+      </tr>
+    </thead>
+    <tbody id="dataTableBody"></tbody>
+  </table>
+  <div class="loading-state" id="loadingState">Loading signups…</div>
+  <div class="empty-state" id="emptyState" style="display:none;">No registrations yet.</div>
+  <div class="error-state" id="errorState" style="display:none;"></div>
+</div>
+
+<script>
+  /* ════════════════════════════════════════════════════════════
+     ADMIN PAGE MODULE
+     Reads waitlist rows back from the same Google Apps Script Web
+     App used by the main site's waitlist form (CHANGE 2/3). The
+     Apps Script needs a doGet() handler that returns JSON — see
+     the setup instructions provided alongside this file.
+     ════════════════════════════════════════════════════════════ */
+
+  // CONFIG — same Apps Script Web App URL used in index.html.
+  const ADMIN_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+  let allRows = [];
+
+  function init() {
+    if (!ADMIN_SCRIPT_URL || ADMIN_SCRIPT_URL.indexOf("PASTE_YOUR") === 0) {
+      document.getElementById('configBanner').style.display = 'block';
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('emptyState').style.display = 'block';
+      document.getElementById('emptyState').textContent = 'Not configured yet — see banner above.';
+      return;
+    }
+    loadData();
+  }
+
+  function loadData() {
+    document.getElementById('loadingState').style.display = 'block';
+    document.getElementById('errorState').style.display = 'none';
+    document.getElementById('dataTable').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'none';
+
+    fetch(ADMIN_SCRIPT_URL + '?action=list')
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then(rows => {
+        allRows = rows || [];
+        renderStats(allRows);
+        renderTable(allRows);
+      })
+      .catch(err => {
+        console.error('Failed to load waitlist data:', err);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display = 'block';
+        document.getElementById('errorState').textContent = 'Could not load data. Check ADMIN_SCRIPT_URL and that the Apps Script doGet() handler is deployed.';
+      });
+  }
+
+  function renderStats(rows) {
+    const now = new Date();
+    const todayStr = now.toDateString();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    const todayCount = rows.filter(r => new Date(r.timestamp).toDateString() === todayStr).length;
+    const weekCount = rows.filter(r => new Date(r.timestamp) >= weekAgo).length;
+
+    document.getElementById('statTotal').textContent = rows.length;
+    document.getElementById('statToday').textContent = todayCount;
+    document.getElementById('statWeek').textContent = weekCount;
+  }
+
+  function renderTable(rows) {
+    document.getElementById('loadingState').style.display = 'none';
+
+    if (!rows.length) {
+      document.getElementById('emptyState').style.display = 'block';
+      return;
+    }
+
+    // Most recent first
+    const sorted = [...rows].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    const tbody = document.getElementById('dataTableBody');
+    tbody.innerHTML = sorted.map(r => `
+      <tr>
+        <td>${escapeHtml(formatDate(r.timestamp))}</td>
+        <td>${escapeHtml(r.fullName)}</td>
+        <td>${escapeHtml(r.age)}</td>
+        <td>${escapeHtml(r.gender)}</td>
+        <td>${escapeHtml(r.city)}</td>
+        <td>${escapeHtml(r.occupation)}</td>
+        <td>${escapeHtml(r.email)}</td>
+        <td>${escapeHtml(r.phone)}</td>
+        <td>${escapeHtml(r.relationshipGoal)}</td>
+      </tr>
+    `).join('');
+
+    document.getElementById('dataTable').style.display = 'table';
+  }
+
+  function formatDate(ts) {
+    const d = new Date(ts);
+    if (isNaN(d)) return ts;
+    return d.toLocaleString();
+  }
+
+  function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function exportCSV() {
+    if (!allRows.length) return;
+    const headers = ['Timestamp', 'Full Name', 'Age', 'Gender', 'City', 'Occupation', 'Email', 'Phone', 'Relationship Goal'];
+    const csvRows = [headers.join(',')];
+
+    allRows.forEach(r => {
+      const row = [r.timestamp, r.fullName, r.age, r.gender, r.city, r.occupation, r.email, r.phone, r.relationshipGoal]
+        .map(val => `"${String(val || '').replace(/"/g, '""')}"`);
+      csvRows.push(row.join(','));
+    });
+
+    const csvContent = csvRows.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `chooseagain-waitlist-${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('refreshBtn').addEventListener('click', loadData);
+  document.getElementById('exportBtn').addEventListener('click', exportCSV);
+
+  init();
+</script>
+
+</body>
+</html>
