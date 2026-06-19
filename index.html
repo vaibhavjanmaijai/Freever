@@ -215,6 +215,79 @@
     text-decoration: underline;
   }
 
+  /* ── WAITLIST MODAL (new) ── */
+  .form-group select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(13,27,42,0.15);
+    background: var(--soft-white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--charcoal);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    cursor: pointer;
+  }
+  .form-group select:focus { border-color: var(--gold); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin: 1.2rem 0 1.4rem;
+  }
+  .form-checkbox-row input[type="checkbox"] {
+    margin-top: 0.2rem;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--gold);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .form-checkbox-row label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  .form-checkbox-row label a { color: var(--gold); text-decoration: underline; }
+
+  .form-error {
+    font-size: 0.75rem;
+    color: #b3473f;
+    margin-top: -0.6rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .form-error.active { display: block; }
+
+  /* Success confirmation state shown after submit */
+  .waitlist-success {
+    display: none;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  .waitlist-success.active { display: block; }
+  .waitlist-success .success-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.6rem;
+    color: var(--gold);
+  }
+  .waitlist-success h2 { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .waitlist-success p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; }
+
+  .form-submitting { opacity: 0.6; pointer-events: none; }
+
   /* ── NAV ── */
   nav {
     position: fixed;
@@ -237,6 +310,12 @@
     color: var(--navy);
   }
   .logo span { color: var(--gold); }
+
+  /* LOGO COMPONENT (single reference point for swapping in a real logo file) */
+  .logo-link { display: flex; align-items: center; text-decoration: none; }
+  .site-logo { height: 36px; display: block; }
+  .logo-fallback { display: none; } /* shown automatically via onerror if no image is found */
+  footer .logo-link .site-logo { height: 30px; }
 
   nav ul {
     display: flex;
@@ -577,6 +656,29 @@
   }
   .step p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
 
+  /* ── TRUST & SAFETY (new) ── */
+  .trust-section { background: rgba(13,27,42,0.03); }
+  .trust-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+  .trust-inner .section-label, .trust-inner h2 { text-align: center; }
+  .trust-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 3rem;
+  }
+  .trust-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 0.9rem 1.6rem;
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .trust-check { color: var(--gold); font-weight: 600; }
+
   /* ── CONTRACT ── */
   .contract-section { max-width: 1000px; margin: 0 auto; }
 
@@ -865,6 +967,13 @@
   .cta-section h2 em { font-style: italic; color: var(--gold); }
   .cta-section p { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: 2.5rem; }
 
+  /* ── FOUNDING MEMBER (new) ── */
+  .founding-section { background: var(--navy); }
+  .founding-inner { text-align: center; max-width: 640px; margin: 0 auto; }
+  .founding-inner .section-label { text-align: center; }
+  .founding-inner h2 { color: var(--white); text-align: center; }
+  .founding-inner p { color: rgba(255,255,255,0.55); font-size: 0.95rem; line-height: 1.8; margin-bottom: 2rem; }
+
   /* ── FOOTER ── */
   footer {
     background: var(--navy);
@@ -878,6 +987,12 @@
   }
   footer .logo { color: var(--white); }
   .footer-note { font-size: 0.72rem; color: rgba(255,255,255,0.25); text-align: right; max-width: 320px; line-height: 1.6; }
+
+  /* NEW: footer contact + legal links */
+  .footer-links { margin-top: 0.8rem; font-size: 0.7rem; }
+  .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-link-sep { color: rgba(255,255,255,0.2); margin: 0 0.4rem; }
 
   /* ── MOBILE ── */
   @media (max-width: 768px) {
@@ -896,6 +1011,8 @@
     footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
     .footer-note { text-align: center; }
     .btn-group { flex-direction: column; align-items: center; }
+    .form-row { grid-template-columns: 1fr; }
+    .trust-grid { gap: 0.8rem; }
   }
 </style>
 </head>
@@ -957,9 +1074,97 @@
   </div>
 </div>
 
-<!-- NAV -->
+<!-- WAITLIST MODAL (new — separate from the login/signup authModal above) -->
+<div class="modal-overlay" id="waitlistModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeWaitlistModal()">✕</button>
+    <div class="modal-logo">Choose<span>Again</span></div>
+    <span class="modal-tagline">Forever should be a choice, not a condition</span>
+
+    <!-- FORM STATE -->
+    <div id="waitlistFormState">
+      <h2>Join Early Access</h2>
+      <p class="modal-sub">Be among the first to experience Choose Again when matching opens.</p>
+
+      <form id="waitlistForm" novalidate>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="wl-name" placeholder="Your full name" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="wl-age" placeholder="e.g. 29" min="18" max="99" required />
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select id="wl-gender" required>
+              <option value="" disabled selected>Select</option>
+              <option value="Woman">Woman</option>
+              <option value="Man">Man</option>
+              <option value="Non-binary">Non-binary</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" id="wl-city" placeholder="e.g. Hyderabad" required />
+        </div>
+
+        <div class="form-group">
+          <label>Occupation</label>
+          <input type="text" id="wl-occupation" placeholder="What do you do?" required />
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="wl-email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" id="wl-phone" placeholder="+91 9XXXXXXXXX" required />
+        </div>
+
+        <div class="form-group">
+          <label>Relationship Goal</label>
+          <select id="wl-goal" required>
+            <option value="" disabled selected>Select your goal</option>
+            <option value="Time-bound partnership (1 year)">Time-bound partnership (1 year)</option>
+            <option value="Established union (3 years)">Established union (3 years)</option>
+            <option value="Long-term union (5 years)">Long-term union (5 years)</option>
+            <option value="Still exploring / not sure yet">Still exploring / not sure yet</option>
+          </select>
+        </div>
+
+        <div class="form-checkbox-row">
+          <input type="checkbox" id="wl-consent" required />
+          <label for="wl-consent">I agree to the <a href="#terms" onclick="closeWaitlistModal()">Terms &amp; Conditions</a> and <a href="#privacy" onclick="closeWaitlistModal()">Privacy Policy</a>.</label>
+        </div>
+        <div class="form-error" id="wl-error">Please fill all required fields and accept the Terms &amp; Conditions.</div>
+
+        <button type="submit" class="form-btn" id="wl-submit-btn">Join Waitlist</button>
+      </form>
+    </div>
+
+    <!-- SUCCESS STATE (shown after successful submission) -->
+    <div class="waitlist-success" id="waitlistSuccessState">
+      <div class="success-icon">✓</div>
+      <h2>You're on the list</h2>
+      <p>Thank you for joining ChooseAgain Early Access.<br>We will contact you when matching begins.</p>
+    </div>
+  </div>
+</div>
 <nav>
-  <div class="logo">Choose<span>Again</span></div>
+  <!-- LOGO COMPONENT: replace src below with your logo file (e.g. assets/logo.png) when ready.
+       Until an image is set, the text wordmark fallback displays automatically. -->
+  <a href="#" class="logo-link" aria-label="Choose Again home">
+    <img src="assets/logo.png" alt="Choose Again logo" class="site-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+    <div class="logo logo-fallback">Choose<span>Again</span></div>
+  </a>
   <ul>
     <li><a href="#why">Philosophy</a></li>
     <li><a href="#how">Process</a></li>
@@ -970,7 +1175,7 @@
   </ul>
   <div class="nav-auth-group">
     <button class="nav-login" onclick="openModal('login')">Sign In</button>
-    <button class="nav-cta" onclick="openModal('signup')">Get Started</button>
+    <button class="nav-cta" onclick="openWaitlistModal()">Join Waitlist</button>
   </div>
 </nav>
 
@@ -988,8 +1193,8 @@
     <div class="hero-divider"></div>
     <p class="hero-sub">What if commitment came with a renewal clause? Choose Again reimagines partnership as a conscious, time-bound agreement — renewable, respectful, and always mutual.</p>
     <div class="btn-group">
-      <a href="#contract" class="btn-primary">View the Contract</a>
-      <a href="#why" class="btn-outline">Our Philosophy</a>
+      <button class="btn-primary" onclick="openWaitlistModal()">Join Waitlist</button>
+      <a href="#contract" class="btn-outline">View the Contract</a>
     </div>
   </div>
 </section>
@@ -1055,24 +1260,39 @@
     <div class="steps-grid">
       <div class="step">
         <div class="step-dot">1</div>
-        <h3>Draft Together</h3>
-        <p>Both partners collaboratively define their terms — duration, finances, cohabitation, family planning — using our guided framework.</p>
+        <h3>Join Waitlist</h3>
+        <p>Sign up for early access with a few details about yourself and what you're looking for in a partnership.</p>
       </div>
       <div class="step">
         <div class="step-dot">2</div>
-        <h3>Legal Review</h3>
-        <p>The draft is reviewed by a certified relationship contract attorney to ensure it's enforceable and protects both parties equally.</p>
+        <h3>Verification Process</h3>
+        <p>We verify your mobile number, email, and identity to keep the community genuine, safe, and accountable.</p>
       </div>
       <div class="step">
         <div class="step-dot">3</div>
-        <h3>Mutual Signing</h3>
-        <p>Both parties sign voluntarily and in full awareness. The ceremony is yours to design — traditional, modern, or quietly private.</p>
+        <h3>Compatibility Matching</h3>
+        <p>Once matching opens, we connect you with people who share your values, goals, and relationship intentions.</p>
       </div>
       <div class="step">
         <div class="step-dot">4</div>
-        <h3>Renew or Release</h3>
-        <p>90 days before term end, both partners decide: renew for another term, renegotiate new terms, or separate with dignity and clarity.</p>
+        <h3>Meet &amp; Decide</h3>
+        <p>Meet with intention, have the honest conversations early, and decide together what kind of partnership you want to build.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST & SAFETY (new) -->
+<section id="trust" class="trust-section">
+  <div class="trust-inner">
+    <span class="section-label">Built On Trust</span>
+    <h2>Safety, verified</h2>
+    <div class="trust-grid">
+      <div class="trust-item"><span class="trust-check">✓</span> Mobile Verification</div>
+      <div class="trust-item"><span class="trust-check">✓</span> Email Verification</div>
+      <div class="trust-item"><span class="trust-check">✓</span> Identity Verification</div>
+      <div class="trust-item"><span class="trust-check">✓</span> Privacy Protection</div>
+      <div class="trust-item"><span class="trust-check">✓</span> Human Moderation</div>
     </div>
   </div>
 </section>
@@ -1409,6 +1629,34 @@
   </div>
 </section>
 
+<!-- PRIVACY POLICY (new — reuses terms-doc styling for visual consistency) -->
+<section id="privacy" class="terms-section">
+  <div class="terms-inner">
+    <span class="section-label">Legal</span>
+    <h2>Privacy Policy</h2>
+    <p style="color:var(--muted); font-size:0.9rem; line-height:1.8; max-width:680px;">How we collect, use, and protect your information.</p>
+
+    <div class="terms-doc">
+      <span class="terms-effective">Effective Date: June 1, 2026 &nbsp;·&nbsp; Choose Again</span>
+
+      <h3>1. Information We Collect</h3>
+      <p>When you join our waitlist or create an account, we collect information you provide directly, including your name, age, gender, city, occupation, email address, mobile number, and relationship goal.</p>
+
+      <h3>2. How We Use Your Information</h3>
+      <p>We use your information to manage the waitlist, contact you when matching begins, verify your identity, and improve our matching and platform experience. We do not sell your personal data to third parties.</p>
+
+      <h3>3. Data Storage & Security</h3>
+      <p>Waitlist information is stored securely and access is limited to authorized team members. We take reasonable measures to protect your data against unauthorized access, alteration, or disclosure.</p>
+
+      <h3>4. Your Rights</h3>
+      <p>You may request access to, correction of, or deletion of your personal data at any time by contacting us at <a href="mailto:chooseagain4@gmail.com" style="color:var(--gold);">chooseagain4@gmail.com</a>.</p>
+
+      <h3>5. Contact</h3>
+      <p>For privacy-related questions, write to us at <strong>chooseagain4@gmail.com</strong>.</p>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section id="join">
   <div class="cta-section">
@@ -1416,18 +1664,42 @@
     <h2>Start writing your<br><em>own story</em></h2>
     <p>Download the contract template, explore the framework, and begin the most honest conversation you'll have about partnership.</p>
     <div class="btn-group">
-      <a href="#contract" class="btn-primary">Download Contract Template</a>
-      <button class="btn-outline" onclick="openModal('signup')">Create Your Account</button>
+      <button class="btn-primary" onclick="openWaitlistModal()">Join Waitlist</button>
+      <a href="#contract" class="btn-outline">Download Contract Template</a>
     </div>
   </div>
 </section>
 
+<!-- FOUNDING MEMBER (new) -->
+<section id="founding-member" class="founding-section">
+  <div class="founding-inner">
+    <span class="section-label">Early Access</span>
+    <h2>Become a Founding Member</h2>
+    <p>Join our earliest community members and help shape the future of ChooseAgain.</p>
+    <button class="btn-primary" onclick="openWaitlistModal()">Join Waitlist</button>
+  </div>
+</section>
+
 <!-- FOOTER -->
-<footer>
-  <div class="logo">Choose<span style="color:var(--gold)">Again</span></div>
+<footer id="contact">
+  <!-- Same logo component as nav — update assets/logo.png once to change it everywhere -->
+  <a href="#" class="logo-link" aria-label="Choose Again home">
+    <img src="assets/logo.png" alt="Choose Again logo" class="site-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+    <div class="logo logo-fallback">Choose<span style="color:var(--gold)">Again</span></div>
+  </a>
   <div style="font-size:0.75rem; color:rgba(255,255,255,0.3); text-align:center;">
     "Forever should be a choice, not a condition."<br>
     <span style="font-size:0.68rem;">Founded by Vaibhav Kumar · Hyderabad, India</span>
+    <!-- NEW: contact email + quick links -->
+    <div class="footer-links">
+      <a href="mailto:chooseagain4@gmail.com">chooseagain4@gmail.com</a>
+      <span class="footer-link-sep">·</span>
+      <a href="#privacy">Privacy Policy</a>
+      <span class="footer-link-sep">·</span>
+      <a href="#terms">Terms &amp; Conditions</a>
+      <span class="footer-link-sep">·</span>
+      <a href="#contact">Contact Us</a>
+    </div>
   </div>
   <div class="footer-note">
     Choose Again is a conceptual framework for conscious partnership. Always consult a licensed legal professional in your jurisdiction. This does not constitute legal advice.
@@ -1461,6 +1733,112 @@
   document.getElementById('authModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
+
+  /* ════════════════════════════════════════════════════════════
+     WAITLIST MODULE (new)
+     Handles: opening/closing the waitlist modal, client-side
+     validation, and submitting data to Google Sheets via a
+     Google Apps Script Web App (which also sends the email alert
+     to chooseagain4@gmail.com server-side — see setup instructions).
+     ════════════════════════════════════════════════════════════ */
+
+  // CONFIG — paste your deployed Google Apps Script Web App URL here.
+  // This is the ONLY line you need to change after deploying the script.
+  const WAITLIST_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+  function openWaitlistModal() {
+    // Always reset to the form view (in case it was left on the success state)
+    document.getElementById('waitlistFormState').style.display = 'block';
+    document.getElementById('waitlistSuccessState').classList.remove('active');
+    document.getElementById('waitlistModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeWaitlistModal() {
+    document.getElementById('waitlistModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('waitlistModal').addEventListener('click', function(e) {
+    if (e.target === this) closeWaitlistModal();
+  });
+
+  document.getElementById('waitlistForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const errorEl = document.getElementById('wl-error');
+    const submitBtn = document.getElementById('wl-submit-btn');
+    const form = e.target;
+
+    // Collect field values
+    const data = {
+      timestamp: new Date().toISOString(),
+      fullName: document.getElementById('wl-name').value.trim(),
+      age: document.getElementById('wl-age').value.trim(),
+      gender: document.getElementById('wl-gender').value,
+      city: document.getElementById('wl-city').value.trim(),
+      occupation: document.getElementById('wl-occupation').value.trim(),
+      email: document.getElementById('wl-email').value.trim(),
+      phone: document.getElementById('wl-phone').value.trim(),
+      relationshipGoal: document.getElementById('wl-goal').value,
+      consent: document.getElementById('wl-consent').checked
+    };
+
+    // Basic client-side validation (required fields + consent checkbox)
+    const requiredOk = data.fullName && data.age && data.gender && data.city &&
+                        data.occupation && data.email && data.phone && data.relationshipGoal;
+    if (!requiredOk || !data.consent) {
+      errorEl.classList.add('active');
+      return;
+    }
+    errorEl.classList.remove('active');
+
+    // Show a lightweight submitting state
+    form.classList.add('form-submitting');
+    submitBtn.textContent = 'Submitting...';
+
+    submitWaitlistEntry(data)
+      .then(() => {
+        // Show success confirmation
+        document.getElementById('waitlistFormState').style.display = 'none';
+        document.getElementById('waitlistSuccessState').classList.add('active');
+        form.reset();
+      })
+      .catch((err) => {
+        console.error('Waitlist submission failed:', err);
+        errorEl.textContent = 'Something went wrong. Please try again in a moment.';
+        errorEl.classList.add('active');
+      })
+      .finally(() => {
+        form.classList.remove('form-submitting');
+        submitBtn.textContent = 'Join Waitlist';
+      });
+  });
+
+  // Sends the waitlist entry to the Google Apps Script Web App.
+  // The Apps Script endpoint is responsible for writing the row to
+  // Google Sheets AND sending the email alert to chooseagain4@gmail.com.
+  // Kept as its own function so the backend can be swapped later
+  // (e.g. for a custom API) without touching the form logic above.
+  function submitWaitlistEntry(data) {
+    if (!WAITLIST_SCRIPT_URL || WAITLIST_SCRIPT_URL.indexOf("PASTE_YOUR") === 0) {
+      // Apps Script URL not configured yet — fail loudly in console for the developer,
+      // but still resolve so the UX can be tested with the success state.
+      console.warn('WAITLIST_SCRIPT_URL is not configured yet. See setup instructions.');
+      return Promise.resolve();
+    }
+
+    // Apps Script Web Apps work most reliably with a simple POST using
+    // 'text/plain' content type (avoids CORS preflight issues) and a JSON string body.
+    return fetch(WAITLIST_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    }).then((res) => {
+      if (!res.ok) throw new Error('Network response was not ok');
+      return res.json().catch(() => ({})); // some Apps Script responses may not be JSON
+    });
+  }
 </script>
 
 </body>
